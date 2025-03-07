@@ -1,0 +1,62 @@
+
+    {
+        "data":[
+            {
+                "id":1,
+                "title":"成绩分析",
+                "icon":"el-icon-s-order",
+                "children":[
+                    {
+                        "id":10,
+                        "title":"学生成绩画像",
+                        "spellname":"Information",
+                        "routing":"/personal/information"
+
+                    },
+                    {
+                        "id":11,
+                        "title":"本班成绩分析",
+                        "spellname":"Information",
+                        "routing":"/personal/information"
+
+                    },
+                   
+                    {
+                        "id":12,
+                        "title":"多班成绩分析",
+                        "spellname":"Label",
+                        "routing":"/grade-analyze/many-class"
+
+                    },
+                    {
+                        "id":13,
+                        "title":"多校成绩分析",
+                        "spellname":"Experience",
+                        "routing":"/personal/experience"
+
+                    }
+                ]
+            },
+            
+            {
+                "id":6,
+                "title":"后台管理",
+                "icon":"el-icon-s-tools",
+                "children":[
+                    
+                    {
+                        "id":61,
+                        "title":"密码修改",
+                        "spellname":"Reset",
+                        "routing":"/reset"
+                    },
+                    {
+                        "id":62,
+                        "title":"用户注册",
+                        "spellname":"Register",
+                        "routing":"/register"
+                    }
+                ]
+            }
+        ]
+    }
