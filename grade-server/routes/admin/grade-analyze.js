@@ -10,6 +10,8 @@ const upload = multer({ dest: "./uploads" });
 router.post('/analyze/uploadManyClassGrade',upload.single('file'),AdminGradeAnalyze.uploadManyClass);
 router.get('/analyze/getGradeList',AdminGradeAnalyze.getGradeList);
 router.post('/analyze/postAnalyzeParams',AdminGradeAnalyze.postAnalyzeParams);
+router.get('/analyze/getTeacherList',AdminGradeAnalyze.getTeacherList);
+
 
 
 export default router

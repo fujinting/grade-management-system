@@ -22,9 +22,9 @@
             placeholder="请选择"
             style="margin-left: 20px; margin-top: 20px"
           >
-            <el-option label="七年级" value="七年级"> </el-option>
-            <el-option label="八年级" value="八年级"> </el-option>
-            <el-option label="九年级" value="九年级"> </el-option>
+            <el-option label="七年级" value="7"> </el-option>
+            <el-option label="八年级" value="8"> </el-option>
+            <el-option label="九年级" value="9"> </el-option>
           </el-select>
         </div>
         <div style="margin-top: 30px">
@@ -86,7 +86,7 @@ export default {
       fileList: [],
       uploadData: {
         examName: "",
-        examGrade: "七年级",
+        examGrade: "7",
         convertInto: "1",
       },
     };

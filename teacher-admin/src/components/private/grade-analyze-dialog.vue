@@ -106,7 +106,7 @@ export default {
         console.log(res)
         if(res && res.data && res.data.analyzeGradeResult){
           this.handleVisible(false);
-          this.$emit("analyzeGradeResult",res.data.analyzeGradeResult);
+          this.$emit("analyzeGradeResult",res.data.analyzeGradeResult,res.data.data);
           this.btnstatus = false
         }
       });

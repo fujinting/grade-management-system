@@ -32,6 +32,16 @@ export function adminAnalyzeParams(data) {
   });
 }
 
+// 获取教师数据
+const teacherList = "/admin/analyze/getTeacherList";
+export function getTeacherList(query) {
+  return request({
+    url: teacherList,
+    method: "get",
+    params: query,
+  });
+}
+
 
 
 // 后台管理，密码重置

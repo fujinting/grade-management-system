@@ -23,6 +23,9 @@ const examInfoSchema = new mongoose.Schema({
   excellentRate: {
     type: Number,
   },
+  examGrade: {
+    type: Number,
+  },
 });
 
 const ExamInfo = mongoose.model('ExamInfo', examInfoSchema);
