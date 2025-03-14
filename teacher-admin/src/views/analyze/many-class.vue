@@ -280,7 +280,7 @@
           >
           </el-table-column>
           <el-table-column prop="teacher.english" label="教师" width="100">
-             <template slot-scope="scope">
+            <template slot-scope="scope">
               {{ getDisplayTeacher(scope.row, "english", "onlyTeacher") }}
             </template>
           </el-table-column>
@@ -345,7 +345,7 @@
           >
           </el-table-column>
           <el-table-column prop="teacher.political" label="教师" width="100">
-             <template slot-scope="scope">
+            <template slot-scope="scope">
               {{ getDisplayTeacher(scope.row, "political", "onlyTeacher") }}
             </template>
           </el-table-column>
@@ -751,6 +751,8 @@ import gradeAnalyzeDialog from "../../components/private/grade-analyze-dialog.vu
 import teacherConfigDialog from "../../components/private/teacher-config-dialog.vue";
 
 import { getGradeList, getTeacherList } from "@/api/api";
+import * as XLSX from 'xlsx';
+import { saveAs } from "file-saver";
 
 export default {
   data() {
@@ -800,7 +802,7 @@ export default {
         this.analyzeDialog = true;
       } else if (this.analyzeGradeStatus === 2) {
         // 下载结果
-        
+        this.exportExcel();
       }
     },
     init() {
@@ -837,39 +839,210 @@ export default {
         console.log(res.data.data);
       });
     },
-   getDisplayTeacher(row, subject, onlyTeacher) {
-  let teacherName = '';
-  // 第三个参数代表目前是授课教师，并非班主任
-  console.log(
-    row.className,
-    typeof row.className,
-    subject,
-  );
-  console.log(this.teacherListData, "hdsahasihush");
-  if (this.teacherListData.length) {
-    this.teacherListData.map((val) => {
-      console.log(val, "shihdaishdias");
-      // 只包含3不包含2 只是教师
-      if (onlyTeacher === "onlyTeacher") {
-        if (
-          val.teachClass && val.teachClass.length > 0 && val.teachClass[0].class &&
-          val.teachClass[0].class.includes(Number(row.className)) &&
-          val.teachSubject === subject
-        ) {
-          teacherName = val.userName;
-        } 
-      } else {
-        if (val.manageClass && val.manageClass.length > 0 && val.manageClass[0].class &&
-          val.manageClass[0].class.includes(Number(row.className))) {
-          console.log(val.userName, "执行！！");
-          teacherName = val.userName;
-        }
+    getDisplayTeacher(row, subject, onlyTeacher) {
+      let teacherName = "";
+      // 第三个参数代表目前是授课教师，并非班主任
+      console.log(row.className, typeof row.className, subject);
+      console.log(this.teacherListData, "hdsahasihush");
+      if (this.teacherListData.length) {
+        this.teacherListData.map((val) => {
+          console.log(val, "shihdaishdias");
+          // 只包含3不包含2 只是教师
+          if (onlyTeacher === "onlyTeacher") {
+            if (
+              val.teachClass &&
+              val.teachClass.length > 0 &&
+              val.teachClass[0].class &&
+              val.teachClass[0].class.includes(Number(row.className)) &&
+              val.teachSubject === subject
+            ) {
+              teacherName = val.userName;
+            }
+          } else {
+            if (
+              val.manageClass &&
+              val.manageClass.length > 0 &&
+              val.manageClass[0].class &&
+              val.manageClass[0].class.includes(Number(row.className))
+            ) {
+              console.log(val.userName, "执行！！");
+              teacherName = val.userName;
+            }
+          }
+        });
       }
-    });
-  }
 
-  return teacherName;
-}
+      return teacherName;
+    },
+    async exportExcel() {
+      // 构建表头
+      const headers = [
+        [
+          "班级",
+          "考试人数",
+          "参评人数",
+          "语文",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "数学",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          // 其他科目...
+          "总分",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "班主任",
+        ],
+      ];
+
+      // 二级表头
+      const subHeaders = [
+        [
+          "班级",
+          "考试人数",
+          "参评人数",
+          "平均分",
+          "平均分名次",
+          "进线人数",
+          "进线率",
+          "进线率名次",
+          "优秀人数",
+          "优秀率",
+          "优秀率名次",
+          "总评得分",
+          "总评名次",
+          "教师",
+          "平均分",
+          "平均分名次",
+          "进线人数",
+          "进线率",
+          "进线率名次",
+          "优秀人数",
+          "优秀率",
+          "优秀率名次",
+          "总评得分",
+          "总评名次",
+          "教师",
+          // 其他科目...
+          "平均分",
+          "平均分名次",
+          "进线人数",
+          "进线率",
+          "进线率名次",
+          "优秀人数",
+          "优秀率",
+          "优秀率名次",
+          "总评得分",
+          "总评名次",
+          "班主任",
+        ],
+      ];
+
+      // 处理数据
+      const data = this.analyzeGradeData.map((item) => {
+        return [
+          item.className,
+          item.classSize,
+          item.numOfParticipants,
+          // 语文
+          item.subjectAverages.chinese,
+          item.subjectRanks.chinese,
+          item.subjectAverages.chineseInLineCount,
+          item.subjectAverages.chineseInLineRate,
+          item.subjectRanks.chineseInLineRateRank,
+          item.subjectAverages.chineseExcellentCount,
+          item.subjectAverages.chineseExcellentRate,
+          item.subjectRanks.chineseExcellentRateRank,
+          item.subjectAverages.chineseTotalScore,
+          item.subjectRanks.chineseTotalRank,
+          this.getDisplayTeacher(item, "chinese", "onlyTeacher"),
+          // 数学
+          item.subjectAverages.math,
+          item.subjectRanks.math,
+          // ...其他字段
+          // 总分
+          item.subjectAverages.totalScore,
+          // ...其他总分字段
+          this.getDisplayTeacher(item, "", ""),
+        ];
+      });
+
+      // 合并表头
+      const mergeData = [
+        { s: { r: 0, c: 0 }, e: { r: 1, c: 0 } }, // 班级
+        { s: { r: 0, c: 1 }, e: { r: 1, c: 1 } }, // 考试人数
+        { s: { r: 0, c: 2 }, e: { r: 1, c: 2 } }, // 参评人数
+        // 语文合并
+        { s: { r: 0, c: 3 }, e: { r: 0, c: 13 } },
+        // 数学合并
+        { s: { r: 0, c: 14 }, e: { r: 0, c: 24 } },
+        // 其他科目合并...
+      ];
+
+      // 创建工作簿
+      const wb = XLSX.utils.book_new();
+      const ws = XLSX.utils.aoa_to_sheet([...headers, ...subHeaders, ...data]);
+
+      // 设置合并
+      ws["!merges"] = mergeData;
+
+      // 设置列宽
+      ws["!cols"] = [
+        { wch: 10 },
+        { wch: 10 },
+        { wch: 10 },
+        // 语文列
+        { wch: 10 },
+        { wch: 12 },
+        { wch: 12 },
+        { wch: 12 },
+        { wch: 12 },
+        { wch: 12 },
+        { wch: 12 },
+        { wch: 12 },
+        // ...其他列宽
+      ];
+
+      // 添加到工作簿
+      XLSX.utils.book_append_sheet(wb, ws, "成绩分析");
+
+      // 生成文件
+      const wbout = XLSX.write(wb, {
+        bookType: "xlsx",
+        type: "array",
+        cellStyles: true,
+      });
+
+      // 保存文件
+      saveAs(
+        new Blob([wbout], { type: "application/octet-stream" }),
+        `成绩分析_${new Date().toLocaleDateString()}.xlsx`
+      );
+    },
   },
 };
 </script>
