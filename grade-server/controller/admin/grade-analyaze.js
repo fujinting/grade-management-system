@@ -437,9 +437,14 @@ class AdminGradeAnalyze {
         classAnalysisResults
       );
 
+        // 新增清除 AdminGradeAnalyaze 数据的逻辑
+      const deletedCount = await AdminGradeAnalyaze.deleteMany({
+        examId: examId, // 根据 examId 删除当前考试相关的所有数据
+      });
+
       res.send({
         status: 200,
-        message: "考试信息更新成功，成绩分析完成",
+        message: "考试信息更新成功，成绩分析完成,原始数据已清除",
         data: updatedExamInfo,
         analyzeGradeResult: analyzeGradeResult,
       });
