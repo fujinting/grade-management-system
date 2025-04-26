@@ -24,6 +24,7 @@ class AdminGradeAnalyze {
       const data = XLSX.utils.sheet_to_json(worksheet);
       let pointSeven = 1;
       let pointFive = 1;
+      let pointSex = 1;
 
       // 保存考试信息并获取 examId
       const examInfo = new ExamInfo({
@@ -36,6 +37,7 @@ class AdminGradeAnalyze {
       if (convertInto === "1") {
         pointSeven = 0.7;
         pointFive = 0.5;
+        pointSex = 0.6
       }
 
       const documents = data.map((item) => {
@@ -54,7 +56,8 @@ class AdminGradeAnalyze {
           toNumber(item["地理"]) * pointFive +
           toNumber(item["生物"]) * pointFive +
           toNumber(item["物理"]) * pointSeven +
-          toNumber(item["化学"]) * pointFive;
+          toNumber(item["化学"]) * pointFive +
+          toNumber(item["体育"]) * pointSex
 
         return {
           examId: examId,
@@ -71,6 +74,8 @@ class AdminGradeAnalyze {
           biology: toNumber(item["生物"]) * pointFive,
           physics: toNumber(item["物理"]) * pointSeven,
           chemistry: toNumber(item["化学"]) * pointFive,
+          sports: toNumber(item["体育"]) * pointSex
+
         };
       });
 
@@ -190,6 +195,7 @@ class AdminGradeAnalyze {
         "biology",
         "physics",
         "chemistry",
+        "sports"
       ];
       subjects.forEach((subject) => {
         const sortedGrades = [...grades].sort(
@@ -415,8 +421,8 @@ class AdminGradeAnalyze {
             result.subjectRanks[`${subject}ExcellentRateRank`];
           result.subjectAverages[`${subject}TotalScore`] =
             averageRankScore * 0.6 +
-            inLineRateRankScore * 0.2 +
-            excellentRateRankScore * 0.2;
+            inLineRateRankScore * 0.3 +
+            excellentRateRankScore * 0.1;
         });
 
         // 对该学科总评得分进行排序

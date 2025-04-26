@@ -23,6 +23,7 @@ const adminGradeAnalyazeSchema = new Schema({
   biology: Number,
   physics: Number,
   chemistry: Number,
+  sports: Number,
   schoolRank: Number,
   classRank: Number
 });

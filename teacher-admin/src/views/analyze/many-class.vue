@@ -62,6 +62,7 @@
         <el-table-column prop="biology" label="生物"> </el-table-column>
         <el-table-column prop="physics" label="物理"> </el-table-column>
         <el-table-column prop="chemistry" label="化学"> </el-table-column>
+        <el-table-column prop="sports" label="体育"> </el-table-column>
         <el-table-column prop="score" label="总分"> </el-table-column>
         <el-table-column prop="schoolRank" label="校次"> </el-table-column>
         <el-table-column prop="classRank" label="班次"> </el-table-column>
@@ -676,6 +677,71 @@
             </template>
           </el-table-column>
         </el-table-column>
+        <el-table-column label="体育" header-align="center">
+          <el-table-column
+            prop="subjectAverages.sports"
+            label="平均分"
+            width="180"
+          >
+          </el-table-column>
+          <el-table-column
+            prop="subjectRanks.sports"
+            label="平均分名次"
+            width="100"
+          >
+          </el-table-column>
+          <el-table-column
+            prop="subjectAverages.sportsInLineCount"
+            label="进线人数"
+          >
+          </el-table-column>
+          <el-table-column
+            prop="subjectAverages.sportsInLineRate"
+            label="进线率"
+            width="180"
+          >
+          </el-table-column>
+          <el-table-column
+            prop="subjectRanks.sportsInLineRateRank"
+            label="进线率名次"
+            width="100"
+          >
+          </el-table-column>
+          <el-table-column
+            prop="subjectAverages.sportsExcellentCount"
+            label="优秀人数"
+          >
+          </el-table-column>
+          <el-table-column
+            prop="subjectAverages.sportsExcellentRate"
+            label="优秀率"
+            width="180"
+          >
+          </el-table-column>
+          <el-table-column
+            prop="subjectRanks.sportsExcellentRateRank"
+            label="优秀率名次"
+            width="100"
+          >
+          </el-table-column>
+          <el-table-column
+            prop="subjectAverages.sportsTotalScore"
+            label="总评得分"
+            width="180"
+          >
+          </el-table-column>
+          <el-table-column
+            prop="subjectRanks.sportsTotalRank"
+            label="总评名次"
+            width="100"
+          >
+          </el-table-column>
+          <el-table-column prop="teacher.sports" label="教师" width="100">
+            <template slot-scope="scope">
+              {{ getDisplayTeacher(scope.row, "sports", "onlyTeacher") }}
+            </template>
+          </el-table-column>
+        </el-table-column>
         <el-table-column label="总分" header-align="center">
           <el-table-column
             prop="subjectAverages.totalScore"
@@ -982,6 +1048,17 @@ export default {
           "",
           "",
           "",
+            "体育",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
           // 其他科目...
           "总分",
           "",
@@ -1111,7 +1188,19 @@ export default {
           "总评得分",
           "总评名次",
           "教师",
-          // 其他科目...
+            // 体育
+          "平均分",
+          "平均分名次",
+          "进线人数",
+          "进线率",
+          "进线率名次",
+          "优秀人数",
+          "优秀率",
+          "优秀率名次",
+          "总评得分",
+          "总评名次",
+          "教师",
+          // 总分...
           "平均分",
           "平均分名次",
           "进线人数",
@@ -1240,6 +1329,18 @@ export default {
           item.subjectAverages.chemistryTotalScore,
           item.subjectRanks.chemistryTotalRank,
           this.getDisplayTeacher(item, "chemistry", "onlyTeacher"),
+          // 体育
+          item.subjectAverages.sports,
+          item.subjectRanks.sports,
+          item.subjectAverages.sportsInLineCount,
+          item.subjectAverages.sportsInLineRate,
+          item.subjectRanks.sportsInLineRateRank,
+          item.subjectAverages.sportsExcellentCount,
+          item.subjectAverages.sportsExcellentRate,
+          item.subjectRanks.sportsExcellentRateRank,
+          item.subjectAverages.sportsTotalScore,
+          item.subjectRanks.sportsTotalRank,
+          this.getDisplayTeacher(item, "sports", "onlyTeacher"),
 
           // ...其他字段
           // 总分
@@ -1281,10 +1382,11 @@ export default {
         { s: { r: 0, c: 80 }, e: { r: 0, c: 90 } },
          // 化学合并
         { s: { r: 0, c: 91 }, e: { r: 0, c: 101 } },
-          // 总分合并
+         // 体育合并
         { s: { r: 0, c: 102 }, e: { r: 0, c: 112 } },
+          // 总分合并
+        { s: { r: 0, c: 113 }, e: { r: 0, c: 123 } },
         
-        // 其他科目合并...
       ];
 
       // 创建工作簿
@@ -1372,6 +1474,15 @@ export default {
         { wch: 13 },
         { wch: 13 },
          // 化学列
+        { wch: 10 },
+        { wch: 13 },
+        { wch: 13 },
+        { wch: 13 },
+        { wch: 13 },
+        { wch: 13 },
+        { wch: 13 },
+        { wch: 13 },
+           // 体育列
         { wch: 10 },
         { wch: 13 },
         { wch: 13 },

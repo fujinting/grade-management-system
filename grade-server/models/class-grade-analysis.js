@@ -29,6 +29,7 @@ const classGradeAnalysisSchema = new Schema({
         biology: { type: Number },
         physics: { type: Number },
         chemistry: { type: Number },
+        sports: { type: Number },
         totalScore: { type: Number }, // 总分平均分
         chineseInLineCount: { type: Number }, // 语文进线人数
         chineseInLineRate: { type: Number },  // 语文进线率
@@ -66,6 +67,10 @@ const classGradeAnalysisSchema = new Schema({
         chemistryInLineRate: { type: Number },
         chemistryExcellentCount: { type: Number },
         chemistryExcellentRate: { type: Number },
+        sportsInLineCount: { type: Number },
+        sportsInLineRate: { type: Number },
+        sportsExcellentCount: { type: Number },
+        sportsExcellentRate: { type: Number },
         totalInLineCount: { type: Number }, // 总分进线人数
         totalInLineRate: { type: Number },  // 总分进线率
         totalExcellentCount: { type: Number }, // 总分优秀人数
@@ -80,6 +85,7 @@ const classGradeAnalysisSchema = new Schema({
         biologyTotalScore: { type: Number },
         physicsTotalScore: { type: Number },
         chemistryTotalScore: { type: Number },
+        sportsTotalScore: { type: Number },
         // 新增总分的总评得分字段
         totalTotalScore: { type: Number }
     },
@@ -93,6 +99,7 @@ const classGradeAnalysisSchema = new Schema({
         biology: { type: Number },
         physics: { type: Number },
         chemistry: { type: Number },
+        sports: { type: Number },
         totalScore: { type: Number }, // 总分平均分排名
         chineseInLineRateRank: { type: Number }, // 语文进线率排名
         chineseExcellentRateRank: { type: Number }, // 语文优秀率排名
@@ -112,6 +119,8 @@ const classGradeAnalysisSchema = new Schema({
         physicsExcellentRateRank: { type: Number },
         chemistryInLineRateRank: { type: Number },
         chemistryExcellentRateRank: { type: Number },
+        sportsInLineRateRank: { type: Number },
+        sportsExcellentRateRank: { type: Number },
         totalInLineRateRank: { type: Number }, // 总分进线率排名
         totalExcellentRateRank: { type: Number }, // 总分优秀率排名
         // 新增每个学科的总评名次字段
@@ -124,6 +133,7 @@ const classGradeAnalysisSchema = new Schema({
         biologyTotalRank: { type: Number },
         physicsTotalRank: { type: Number },
         chemistryTotalRank: { type: Number },
+        sportsTotalRank: { type: Number },
         // 新增总分的总评名次字段
         totalTotalRank: { type: Number }
     },
