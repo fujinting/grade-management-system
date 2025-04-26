@@ -131,20 +131,29 @@ class AdminGradeAnalyze {
 
   async postAnalyzeParams(req, res) {
     try {
-      const { takePartinNum, inLineRate, excellentRate, numOfPeople, examId } =
-        req.body;
+      // const { takePartinRate, inLineRate, excellentRate, numOfPeople, examId } =
+      //   req.body;
+
+      //  const takePartinRate1 =  takePartinRate/100
+      const {inLineRate, excellentRate, numOfPeople, examId } = req.body;
 
       // 更新 ExamInfo 数据表中的数据
       const updatedExamInfo = await ExamInfo.findByIdAndUpdate(
         examId,
         {
-          takePartinNum: takePartinNum,
+          // takePartinRate: takePartinRate,
           inLineRate: inLineRate,
           excellentRate: excellentRate,
           numOfPeople: numOfPeople,
         },
         { new: true } // 返回更新后的文档
       );
+
+      // 新增：从更新后的文档中获取 examGrade（若后续逻辑需要使用）
+      const examGrade = updatedExamInfo.examGrade; // 关键修改点
+
+      // 打印
+      console.log(examGrade,'111111111111111111')
 
       if (!updatedExamInfo) {
         return res.status(404).send({
@@ -245,7 +254,18 @@ class AdminGradeAnalyze {
       for (const className in classGroups) {
         const classStudents = classGroups[className];
         const classSize = classStudents.length;
-        const numOfParticipants = Math.min(takePartinNum, classSize); // 确保参评人数不超过班级总人数
+        // const numOfParticipants = Math.min( Math.round(classSize * takePartinRate1), classSize); // 确保参评人数不超过班级总人数
+        let numOfParticipants = 0
+        if(examGrade===7){  
+          // 七年级
+          numOfParticipants = classSize - 3; // 确保参评人数不超过班级总人数
+        }else if(examGrade===8){
+          // 八年级
+          numOfParticipants = classSize - 4; 
+        }else{
+          // 九年级
+          numOfParticipants = classSize - 5;
+        }
 
         const subjectAverages = {};
         const subjectRanks = {};
@@ -420,8 +440,8 @@ class AdminGradeAnalyze {
           numOfClasses + 1 - result.subjectRanks.totalExcellentRateRank;
         result.subjectAverages.totalTotalScore =
           totalAverageRankScore * 0.6 +
-          totalInLineRateRankScore * 0.2 +
-          totalExcellentRateRankScore * 0.2;
+          totalInLineRateRankScore * 0.3 +
+          totalExcellentRateRankScore * 0.1;
       });
 
       const sortedByTotalTotalScore = [...classAnalysisResults].sort(

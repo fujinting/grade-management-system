@@ -10,12 +10,12 @@
       <div style="font-size: 18px">
           <div>本次考试人数为 <span class="people-title"> {{numOfPeople}}</span> 人</div>
         <div class="all-rate">
-          <span>每班参评人数:</span>
+          <!-- <span>参评比例:</span>
           <el-input type="number" max="100" min="0"
             style="width: 50px; margin-left: 20px"
-            v-model="analyzeData.takePartinNum"
-             @input="validateRate(analyzeData, 'takePartinNum')"
-          ></el-input>  人
+            v-model="analyzeData.takePartinRate"
+             @input="validateRate(analyzeData, 'takePartinRate')"
+          ></el-input> % -->
         </div>
         <div class="all-rate">
           <span>过线率:</span>
@@ -61,7 +61,7 @@ export default {
     return {
       dialogVisible: false,
       analyzeData: {
-        takePartinNum: 46,
+        // takePartinRate: 90,
         inLineRate: 70,
         excellentRate: 30,
       },

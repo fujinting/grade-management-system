@@ -14,9 +14,9 @@ const examInfoSchema = new mongoose.Schema({
   numOfPeople: {
     type: Number,
   },
-  takePartinRate: {
-    type: Number,
-  },
+  // takePartinRate: {
+  //   type: Number,
+  // },
   inLineRate: {
     type: Number,
   },
