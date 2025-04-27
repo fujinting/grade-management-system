@@ -37,7 +37,7 @@ class AdminGradeAnalyze {
       if (convertInto === "1") {
         pointSeven = 0.7;
         pointFive = 0.5;
-        pointSex = 0.6
+        pointSex =  1 //暂时为1
       }
 
       const documents = data.map((item) => {

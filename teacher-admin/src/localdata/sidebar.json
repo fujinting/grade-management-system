@@ -32,7 +32,7 @@
                         "id":13,
                         "title":"多校成绩分析",
                         "spellname":"Experience",
-                        "routing":"/personal/experience"
+                        "routing":"/grade-analyze/many-school"
 
                     }
                 ]

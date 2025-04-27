@@ -39,6 +39,15 @@ const routes = [
           cname: "多班多学科对比",
         },
       },
+      {
+        path: "/grade-analyze/many-school",
+        name: "ManySchool",
+        component: () => import("../views/analyze/many-school.vue"),
+        meta: {
+          Cname: "成绩分析",
+          cname: "多校多学科对比",
+        },
+      },
         // 密码修改
         {
           path: "/reset",
